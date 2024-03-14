@@ -28,7 +28,8 @@ a {
 }
 
 figure {
-    margin: 0;
+    margin: 20;
+    max-width: 900px;
     padding-bottom: 1.5em;
     
     display: flex; /* Enables flexbox */
