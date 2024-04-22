@@ -1,0 +1,339 @@
+
+        body {
+            margin: 0;
+            font-size: 20px;
+            font-family: 'Gowun Batang', serif;
+            text-rendering: optimizeLegibility;
+        }
+
+        .content {
+            max-width: 640px;
+            margin: auto;
+        }
+
+        .title-content {
+            position: absolute;
+            left: 75%; /* Center horizontally */
+            bottom: 10em; /* 30px above the bottom */
+            transform: translateX(-65%);
+            width: 60%;
+            padding: 20px;
+        }
+
+        .header {
+            padding: 3em 0;
+        }
+
+        a {
+            color:#8e00fa98;
+            ;
+        }
+
+        .footer {
+            background: #f4f4f4;
+            text-align: center;
+            font-size: 0.8em;
+            margin-top: 4em;
+            padding: 4em 0;
+        }
+
+        figure {
+            margin: 0;
+            padding-bottom: 4em;
+            margin-bottom: 4em;
+            }
+
+        figcaption {
+            font-size: 0.8em;
+            text-align: center;
+            margin-bottom: 1.5em;
+            color: #666;
+        }
+
+        h1 {
+            font-family: 'Gowun Batang', serif;
+            font-weight: bold;
+            font-size: 3em;
+            line-height: 1.1;
+        }
+
+        .subhead {
+            font-family: 'Gowun Batang', serif;
+        }
+
+        .full-width figure {
+            text-align: center;
+        }
+
+        iframe,
+        img,
+        video {
+            max-width: 100%;
+        }
+
+        p {
+            line-height: 1.6;
+            margin: 0;
+            padding-bottom: 1.2em;
+        }
+
+        ul {
+            margin: 0;
+            padding-bottom: 1em;
+            line-height: 1.6;
+        }
+
+        iframe {
+            padding-bottom: 1.2em;
+        }
+
+        code {
+            font-family: 'Courier New', monospace;
+            background: #fff880;
+        }
+
+        svg{
+            overflow: visible;
+        }
+        
+        body{
+          margin: 0px;
+          font-family:BentonSans;
+        /*  overflow: hidden;
+        */}
+        
+        .banner, .banner2 {
+            background-color:#4c6369;
+            width: 100%;
+            text-transform: uppercase;
+            color:#fff;
+        }
+        
+        .banner {
+            height:20px;
+            width:100%;
+            padding:0px 0px 0px 5px;
+        }
+        
+        .banner2 {
+            margin:8px 0px 0px 0px;
+            height:5px;
+            bottom:10px;
+            width:100%;
+        }
+        
+        .big-container {
+          margin:auto;
+          width:50%;
+        }
+        
+        .axis{
+          opacity: .5;
+        }
+        
+        .intro-dot {
+          fill:#de54ea;
+        }
+        
+        .line{
+          fill: #F6839C;
+          stroke: #8e00fa98;
+          stroke-width: 3;
+        }
+        
+        .area{
+          fill: #b545c157;
+          opacity: .4;
+        }
+        
+        
+        
+        .your-line{
+          stroke: #de54ea;
+          stroke-width: 3;
+          stroke-dasharray: 5 5;
+        }
+        
+        .explain {
+          visibility: hidden;
+        }
+        
+        .your-pink{
+          display:inline;
+          font-size:22px;
+          color:#de54ea;
+        }
+        
+        
+        .njam-container {
+            max-width: 750px;
+            margin: auto;
+            justify-content: center;
+            font-family: 'Gowun Batang', serif;
+            text-rendering: optimizeLegibility;
+            fill: #de54ea;
+        /*    margin:0px 0px 0px 10px;
+        */    padding:0px 0px 15px 15px;
+        
+        }
+        
+        
+        .njam-container div.btn-group.bootstrap-select {
+            width: 90%;
+        }
+        
+        .intro_text {
+            font-size: 14px;
+            clear: both;
+        }
+
+        .with-video-bg {
+            position: relative;
+            background-size: cover;
+            margin-bottom: 2em;
+
+            /* Center everything inside */
+            min-height: 90svh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+
+            /* White text with a shadow */
+            color: white;
+            text-shadow: 0px 0px 30px black,
+                0px 0px 10px rgba(0, 0, 0, 0.5);
+            }
+
+        .video-background {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .video-background video {
+            object-fit: cover;
+            width: 100%;
+            height: 100%;
+        }
+        
+
+        /* margin on mobile */
+        @media (max-width: 640px) {
+            body {
+                font-size: 18px;
+            }
+
+            .content {
+                padding-left: 0.5em;
+                padding-right: 0.5em;
+            }
+
+            #njam-container {
+                float:left;
+        }
+
+        
+        /* When it's less than 700 pixels wide, do normal scrollytelling */
+        
+        @media only screen and (min-width: 700px) {
+            .scrolly-container.side-by-side {
+                display: flex;
+            }
+        
+            .scrolly-container.side-by-side>div {
+                flex-basis: 0;
+                flex-grow: 1;
+                flex-shrink: 1;
+                padding: 0.75em;
+            }
+        
+            .scrolly-container.side-by-side .scrolly-overlay {
+                margin-top: 70vh;
+                order: 0;
+                /* Change these to adjust sizing options */
+                min-width: 15rem;
+                max-width: 20rem;
+            }
+        
+            .scrolly-container.side-by-side .sticky-thing {
+                order: 1;
+                flex-grow: 2;
+            }
+        }
+
+
+        /* Scrolly Styles */
+
+        #scrolly {
+            position: relative;
+            padding: 1rem;
+          }
+    
+          .scrolly-overlay {
+            position: relative;
+            padding: 0;
+            max-width: 35rem;
+            margin: 0 auto;
+          }
+    
+          .sticky-thing {
+            position: -webkit-sticky;
+            position: sticky;
+            left: 0;
+            width: 100%;
+            margin: 0;
+            z-index: 0;
+            top: 0;
+            height: 100vh;
+            /* Center everything inside */
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            justify-content: center;
+          }
+    
+          .step {
+            margin: 0 auto 2rem auto;
+            margin-bottom: 25rem;
+            background-color: #eee;
+            background-color: #fff;
+            color: black;
+          }
+    
+          .step p {
+            text-align: center;
+            padding: 1rem;
+            font-size: 1.25rem;
+          }
+    
+          .hidden { visibility: hidden; }
+    
+          /* When it's less than 700 pixels wide, do normal scrollytelling */
+          @media only screen and (min-width: 700px) {
+            #scrolly.side-by-side {
+              display: flex;
+            }
+    
+            #scrolly.side-by-side > div {
+              flex-basis: 0;
+              flex-grow: 1;
+              flex-shrink: 1;
+              padding: 0.75em;
+            }
+    
+            #scrolly.side-by-side .scrolly-overlay {
+              margin-top: 70vh;
+              order: 0;
+              /* Change these to adjust sizing options */
+              min-width: 15rem;
+              max-width: 20rem;
+            }
+    
+            #scrolly.side-by-side .sticky-thing {
+              order: 1;
+              flex-grow: 2;
+            }
+          }
