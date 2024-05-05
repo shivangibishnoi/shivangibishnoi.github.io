@@ -235,6 +235,15 @@
                 float:left;
         }
 
+        .title-content{
+            position: absolute;
+            left: 50%; /* Center horizontally */
+            bottom: 2em; /* 30px above the bottom */
+            transform: translateX(-50%);
+            width: 60%;
+            padding: 20px;
+        }
+
         
         /* When it's less than 700 pixels wide, do normal scrollytelling */
         
@@ -304,6 +313,7 @@
         }
   
         .step p {
+          font-family: 'Gowun Batang', serif;
           text-align: center;
           padding: 1rem;
           font-size: 1.25rem;
