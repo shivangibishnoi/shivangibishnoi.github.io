@@ -104,7 +104,7 @@
             margin-bottom: 2em;
 
             /* Center everything inside */
-            min-height: 80svh;
+            min-height: 90svh;
             display: flex;
             justify-content: center;
             align-items: center;

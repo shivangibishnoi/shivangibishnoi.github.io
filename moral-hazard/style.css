@@ -237,10 +237,10 @@
 
         .title-content{
             position: absolute;
-            left: 50%; /* Center horizontally */
-            bottom: 2em; /* 30px above the bottom */
+            left: 50%; 
+            bottom: 0.5em; 
             transform: translateX(-50%);
-            width: 60%;
+            width: 70%;
             padding: 20px;
         }
 
@@ -264,7 +264,7 @@
                 order: 0;
                 /* Change these to adjust sizing options */
                 min-width: 15rem;
-                max-width: 20rem;
+                max-width: 25rem;
             }
         
             .scrolly-container.side-by-side .sticky-thing {
