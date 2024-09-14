@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NYC Mapbox</title>
+
+
+
+<!-- Google fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<link href="https://api.mapbox.com/mapbox-gl-js/v3.5.1/mapbox-gl.css" rel="stylesheet">
+<script src="https://api.mapbox.com/mapbox-gl-js/v3.5.1/mapbox-gl.js"></script>
+</head>
+
+<body>
+
+
+  <div class="content">
+    <div class="header">
+      <h1>Here is the Map</h1>
+      <p class="subhead">Look at this map
+      </p>
+    </div>
+    <div class="byline">
+      <p>By <a href="https://shivangibishnoi.github.io/">Shivangi Bishnoi</a>
+      </p>
+    </div>
+
+    <div id="map"></div>
+
+
+
+    <script>
+      mapboxgl.accessToken = 'pk.eyJ1Ijoic2I0ODczIiwiYSI6ImNseXp6dDkwdTEwaHQyaXBzNmdweThxcTAifQ.opuxgSfpGb12QGfLRkxwjQ';
+  
+        const map = new mapboxgl.Map({
+            container: 'map', // container ID
+            center: [-119.4179, 36.7783], // starting position [lng, lat]. Note that lat must be set between -90 and 90
+            zoom: 4.5, // starting zoom
+            style: 'mapbox://styles/sb4873/clz06lnsc01oh01nx9rbj4ugi'
+        });
+      
+  
+    </script>
+
+    
+</body>
+
+</html>
