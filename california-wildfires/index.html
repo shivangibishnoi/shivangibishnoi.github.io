@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8' />
+    <title>California Wildfires and Property Prices</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <link rel="icon" type="image/x-icon" href="https://raw.githubusercontent.com/mapbox/assembly/publisher-staging/src/svgs/mapbox.svg">
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v3.5.1/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v3.5.1/mapbox-gl.css' rel='stylesheet' />
+    <script src="https://unpkg.com/intersection-observer@0.12.0/intersection-observer.js"></script>
+    <script src="https://unpkg.com/scrollama"></script>
+    <script src="https://d3js.org/d3.v6.js"></script>
+
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Google fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+
+</head>
+<body>
+
+    <div class="header with-video-bg">
+        <div class="video-background">
+            <video src="images/Wildfire.mp4" preload="auto" tabindex="0" playsinline autoplay loop muted></video>
+        </div>
+        <div class="title-content">
+            <h1>Wildfires in California have done little to adjust property prices in affected areas</h1>
+            <p class="subhead">The case of California shows how climate change risk has not yet seeped into housing markets. This could be brewing trouble for the future.</p>
+        </div>
+    </div>
+
+
+
+    <div class="content">
+    <p>By <a href="https://shivangibishnoi.github.io/">Shivangi Bishnoi</a></p>
+
+    <p>Between 2018 and 2022, 31,140 wildfires have burned over 9 million acres of land, and cost over $3 bn in suppression costs. But what was destroyed is being rebuilt and data shows that housing markets are surprisingly resilient.  Prime real estate in parts of California ravaged by recent wildfires, not only survived, it thrived. 
+    </p>
+
+    <p>
+        A data investigation of mortgage applications in California revealed that the top 25% properties in fire-affected census tracts saw their values jump, on average by $75,000 in 2021 after the 2018-19 fires. Tracts in the same county which were not burned saw no such increase. In some cases, a temporary fall in prices immediately after the incident does occur, but prices more than recover by the following year. Amnesiac property markets seem to forget the fire within 2 years of it hitting an area. 
+    </p>
+
+    <p>
+        Take the case of Sonoma County. After the Tubbs Fire in 2017 destroyed close to 7500 structures, and the Kincade Fire ravaged further 2250  in 2019, local realtor Suzanne Ashimine initially thought the fires would depress home values. But while there was a short dip in the market for the most expensive homes—as some devastated owners relocated, potentially selling their properties at a loss—it turned out the effect was temporary. By 2021, prices picked up again, and not only were most homes rebuilt, but new construction has continued. In the end, says Ashimine, with the county's proximity to San Francisco and Silicon Valley, housing is always in demand. 
+    </p>
+</div>
+    <div class="map-container">
+        <div id="map"></div>
+        <div id="mapInset"></div>
+        <div id="story"></div>
+
+    </div>
+
+    <div class="content">
+        <p>
+            The rise in housing prices is even more surprising considering that insurance markets do not suffer from this memory problem. In most affected areas, insurance costs have skyrocketed, private insurers have fled, and many now rely on the California Fair Plan, the state-backed insurer of last resort.
+            “I know more and more are pulling out of areas that are highly wildfire prone or bumping up premiums like crazy so that people can actually no longer even afford to pay it,” says Ashimine 
+        </p>
+
+        <p>Doug Spiecher, a realtor in Paradise, Butte County is seeing a similar dynamic. The Camp fire in November 2018 burned 11,000 homes to the ground in Paradise and killed 85 people. He is surprised by the pace of recovery in the area.
+        </p>
+
+        <p>
+            For a typical 3-bed, 2-bath floor plan of 1800 square feet, Speicher says that insurance premiums could cost between $3,000 to $4,500 with current interest rates. A similar policy before Camp would have been priced at roughly $1,500. To add to the puzzle, in his experience, while home prices in both Paradise and neighboring Chico, which was spared by the Camp fire, have risen, they have risen much more in Paradise.
+        </p>
+
+        <p>
+            "It's surprising that despite insurance going up, home values have not been affected by that," he says. "It blows my mind.  
+        </p>
+
+        <p>
+            Nicole Lambrou, professor of urban and regional planning at California State Polytechnic University, Pomona says that the influx of out-of-towners might explain the recovery in property prices.
+        </p>
+
+        <p>
+            Her research in the dynamics of rebuilding in Paradise suggests that initial rebuilds were by those who had previously lived in Paradise. However, eventually, she says that, “because the land is cheaper, a lot of developers and contractors went in and they were building spec homes that then they sold afterwards.” 
+        </p>
+
+
+        <p>Classic economic theory says that when demand rises and supply falls, property prices are bound to rise. The mortgage data sheds little clarity on the demand side of things. In fact, the number of loan applications shot up for areas untouched by fire, remaining more or less steady for the fire affected tracts. If new loan applications are a good indicator of demand, then it would seem that post-fire the demand rises more in areas that were not touched by fire. However, both Speicher and Lambrou suggest that those coming from out of town are attracted by the relatively cheap per-acre cost of homes in Paradise, allowing buyers to purchase larger properties than they would be able to afford elsewhere. Lambrou’s research also shows that a lot of people bought second or vacation homes in Paradise. This  influx could partially explain the rise in property prices at the higher end of the market.
+        </p>
+
+    </div> 
+
+
+    <!-- Add 2 buttons -->
+     <div class="button-container">
+        <button onclick="update(data1_treat, data1_control)">Top 25% Property Values</button>
+        <button onclick="update(data2_treat, data2_control)">Number of Loan Applications</button>
+    </div>
+
+<!-- Create a div where the graph will take place -->
+
+<div id="chart"></div>
+
+<div class="content">
+<figcaption>Source: HMDA
+    <br> Chart by Shivangi Bishnoi
+</figcaption>
+</div>
+
+<div class="content">
+    <p>The role of the pandemic also cannot be ruled out. As people fled away from cities in search of larger spaces, fire prone suburbs were an attractive option. While data shows that on average, homes are more expensive in fire affected tracts to begin with, a report from Redfin showed that this gap widened in 2021. The initial dip in prices immediately after a fire could in fact be making the market even more attractive for those who can afford to buy a second home or choose to relocate to escape lockdowns in cities. Another Redfin report from 2021 showed a jump in all cash payments, which the mortgage data we used does not cover. Since all cash payments are used by the wealthy, this means that the actual surge in prices for the richest homes is probably more than the data from mortgages shows.
+    </p>
+
+    <p>
+        Benjamin Keys, professor of real estate and finance at Wharton School says that supply might also explain some of this. In the aftermath of a fire, there is a shortage in the number of available homes, which potentially drives up prices.
+    </p>
+
+    <p>
+        The act of rebuilding itself leads to a price rise because the property is newer and more fire-resistant. “You're replacing a house from the 1960s with a brand new house, built to a new code,”  says Keys. In addition to using more resistant materials, these homes will also have different characteristics and amenities, which may push up prices.  
+    </p>
+
+    <p>
+        A new <a href="https://faculty.haas.berkeley.edu/stanton/pdf/fire.pdf">study</a> led by researchers from the Haas School of Business, U.C. Berkeley has also found that five years after the wildfires that occurred from 2001-15, homes in fire-affected areas were significantly larger in addition to being more expensive. Supportive evidence for this exists for later fires too. For example, five years after the Camp fire, of the 1,416 rebuilt single family homes in Paradise, the average square footage is about 90 square feet larger compared to pre-fire square footage as of 2017. These homes also cost, on average, $63,000 more, a figure comparable to our estimate of $75,000 for the higher end properties.
+    </p>
+
+    <p>
+        In addition to individuals pumping money to make sure their homes last, federal funding has also been earmarked for adaptation and mitigation efforts.  When it comes to market prices, what matters most is perceived risk and not actual risk of fire. And people may simply believe that a second edition of the Camp fire is highly unlikely, especially if adaptation plans are in place.
+    </p>
+
+    <p>
+        "My sister rebuilt a beautiful home. It's probably worth about $800,000, $900,000. And it's gorgeous. She refuses to pay for the cost of insurance. So she has no insurance on the home. She literally believes that the town can't catch fire again," says Speicher.
+    </p>
+
+    <p>
+        While the reasons for the spike in the prices of high-end property are complex and difficult to tease apart, the repercussions of this trend are clearly troublesome. It is apparent that property markets are not yet factoring in climate risks appropriately. Whether it is floods or fire, the penalty for building in risky areas is either non-existent or not enough to encourage the kind of migration that will become inevitable in time. 
+    </p>
+
+    <p>
+        The same U.C. Berkeley research suggests that part of the reason for this is insurance itself. When households have insurance that covers the cost of rebuilding, the incentive to rebuild is very strong. Until 2023, insurance companies were required by law to calculate risk based on past fires. These backward-looking calculations undermine the risk from global warming which will make fires worse. Another <a href="https://www.nber.org/papers/w32579">study</a> by Keys has shown that insurance premiums in California are lower than the national average, despite the reported increases. Eventually, the California Fair Plan will also have to face sustainability woes. 
+
+    </p>
+
+    <p>
+        Keys says that none of the state fair plans have the kind of institutional capacity to deal with the uptake they are currently experiencing. If this continues, taxpayers will be on the hook to bail out the California Fair Plan. He says that the risk models used by private insurers are more sophisticated and better at predicting risk. The state plan relies on spreading the risk across the state, in essence making homeowners in less risky areas subsidize riskier areas.
+        For price signals to effectively deter movement to these areas, insurance premiums would have to rise and reflect the true risk of moving or living in a risky zone. In the absence of proper pricing, those in lower risk areas will continue to bear an increasing burden of risk to keep insurance affordable for homes in the path of fire.
+    </p>
+
+    <p>
+        This is not unique to wildfires, or to California. Flood-prone coastal properties in Florida continue to be in high demand. A 2023 study has estimated that residential properties exposed to flood risk are overvalued by US$121–US$237 billion, i.e. not accounting for increasing damages from coastal flooding.
+    </p>
+
+    <p>
+        Keys, in his evaluation of how sea level rise gets priced into home prices in Florida finds that it does so very gradually."In these most exposed markets, you had an increase in unsold inventory, and homes stayed on the market longer. There were more sort of failed sales," he says. It was only when the price of these homes finally came down, as climate-optimist buyers left the market, that home prices started to relax in these markets, which happened several years after the truth of sea level rise became widely known.
+    </p>
+
+    <p>
+        He adds that a “flight to quality” might explain the effect we observe for the most expensive properties. Mid-tier houses that are not built to code or which have seen the most substantial rises in insurance are unable to actually transact because no one wants to buy these homes at the asking price. For the more expensive houses that are built to new codes, there might be more buyers, willing to pay the relatively higher price.
+    </p>
+
+    <p>
+        The nature of climate change and rising temperatures means that the market cannot stay forgetful forever. <a href="https://faculty.haas.berkeley.edu/stanton/pdf/fire.pdf">Research</a> has estimated that a two-degree fahrenheit shock to maximum daily temperature could put a dent of $19.29 bn to the 2020 values of California homes. But, this does not take into account the dynamic costs to financial institutions, government and the longer term consequences of a broken market.
+    </p>
+
+    <p>
+        If markets do not price in risk appropriately, developers are unlikely to stop building here. Private development is inevitably met with government provided infrastructure- roads, sewers, electricity and the like. While insurers and home values may eventually adapt, infrastructure cannot do so quickly enough.
+        The homes, roads and bridges that continue to be built in these areas, costing billions of dollars in public and private investment, have a time horizon of several decades. Since 2017, the wildfires in California have taken a wilder turn than anyone imagined. In the 50 years that it will take to reverse infrastructure mistakes, the state of California may look nothing like it does today.
+
+    
+    </p>
+
+    <p>
+        Once it is realized that these areas are inherently risky, perhaps, as a result of disappearing insurance or after yet another fire, prices will have to eventually drop. While traditionally homes in the US have been considered a safe investment, because home values do not generally go down, Keys says that it may no longer be the case with climate change. This would impact lower income homeowners the most because they do not have other assets to absorb these risks.
+    </p>
+
+    <p>
+        Markets lag behind climate risk for many reasons. Policymakers often make bigger laggards of markets than they would have otherwise been, for example, by controlling insurance premium hikes through Proposition 103 in California. A piecemeal approach to solving housing in the wake of wildfires is unlikely to succeed in the long-run. But the reason for feet-dragging is so intrinsic that unless this decision is taken out of the hands of local and state governments, it is unlikely that the longer-term vision that is warranted will be adopted.
+    </p>
+
+    <p>
+        “Politically, the incentives are all wrong, because it's very much about winning the next election,” says Keys.
+    </p>
+
+    <p>
+        To let the market play its course, to let insurance premiums rise and to discourage building in areas that are routinely in the path of fire could end the political career of a local or state 	government official. The patchwork of policies that these officials put in place to “revive” and “build back stronger” communities is also to strengthen their tax base which yields property taxes, and to win the next election. 
+    </p>
+
+    <p>
+        Going up the ladder, the federal government has also failed in this endeavor.  “When you look at the National Flood Insurance Program, they massively underpriced risk. So there's just this kind of unwillingness to ever set the price where it needs to be,” adds Keys.  
+    </p>
+
+    <p>
+        He says he is not so worried about the short-term pricing in the markets but the consequences of the market signals.  “We continue to invest in these risky areas when all signs point to the fact we should be doing the exact opposite.” 
+    </p>
+</div>
+
+
+
+<script>
+    const data1_treat = [
+        {ser1: 2018, ser2: 1196769.9759776318},
+        {ser1: 2019, ser2: 1194972.2473363166},
+        {ser1: 2020, ser2: 1134904.0674802847},
+        {ser1: 2021, ser2: 1325000.0}
+    ];
+
+    const data2_treat = [
+        {ser1: 2018, ser2: 16637},
+        {ser1: 2019, ser2: 22022},
+        {ser1: 2020, ser2: 40548},
+        {ser1: 2021, ser2: 39944}
+    ];
+
+    const data1_control = [
+        {ser1: 2018, ser2: 853082.1880045682},
+        {ser1: 2019, ser2: 862044.6560386363},
+        {ser1: 2020, ser2: 918188.717911185},
+        {ser1: 2021, ser2: 875000.0}
+    ];
+
+    const data2_control = [
+        {ser1: 2018, ser2: 498205},
+        {ser1: 2019, ser2: 650533},
+        {ser1: 2020, ser2: 1124994},
+        {ser1: 2021, ser2: 1140868}
+    ];
+
+    // set the dimensions and margins of the graph
+    const margin = {top: 10, right: 30, bottom: 30, left: 50},
+        width = 460 - margin.left - margin.right,
+        height = 400 - margin.top - margin.bottom;
+
+    // append the svg object to the body of the page
+    const svg = d3.select("#chart")
+        .append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", `translate(${margin.left},${margin.top})`);
+
+    // Initialise a X axis:
+    const x = d3.scaleLinear().range([0, width]);
+    const xAxis = d3.axisBottom().scale(x).ticks(4).tickFormat(d3.format("d"));
+    svg.append("g")
+        .attr("transform", `translate(0, ${height})`)
+        .attr("class", "myXaxis");
+
+    // Initialize a Y axis
+    const y = d3.scaleLinear().range([height, 0]);
+    const yAxis = d3.axisLeft().scale(y).tickFormat(d3.format(".2s"));
+    svg.append("g")
+        .attr("class", "myYaxis");
+
+    // Create a function that takes two datasets as input and update the plot:
+    function update(dataTreat, dataControl) {
+
+        // Combine both datasets to determine the domain
+        const combinedData = dataTreat.concat(dataControl);
+
+        // Create the X axis:
+        x.domain([d3.min(combinedData, function (d) { return d.ser1; }), d3.max(combinedData, function (d) { return d.ser1; })]);
+        svg.selectAll(".myXaxis").transition()
+            .duration(3000)
+            .call(xAxis);
+
+        // Determine the buffer size as a percentage of the y-axis range
+        const bufferSize = (d3.max(combinedData, function (d) { return d.ser2; }) - d3.min(combinedData, function (d) { return d.ser2; })) * 0.05;
+
+        // Create the Y axis with buffer:
+        y.domain([d3.min(combinedData, function (d) { return d.ser2; }) - bufferSize, d3.max(combinedData, function (d) { return d.ser2; })]);
+        svg.selectAll(".myYaxis")
+            .transition()
+            .duration(3000)
+            .call(yAxis);
+
+        // Update the treatment line
+        const u = svg.selectAll(".lineTest")
+            .data([dataTreat], function(d) { return d.ser1; });
+
+        u.join("path")
+          .attr("class", "lineTest")
+          .attr("d", d3.line()
+            .x(function(d) { return x(d.ser1); })
+            .y(function(d) { return y(d.ser2); }))
+          .attr("fill", "none")
+          .attr("stroke", "#ED1652")
+          .attr("stroke-width", 2.5)
+          .attr("stroke-dasharray", function() { return this.getTotalLength(); }) // Set stroke-dasharray to the total path length
+          .attr("stroke-dashoffset", function() { return this.getTotalLength(); }) // Set stroke-dashoffset to the total path length
+          .transition()
+          .duration(3000)
+          .attr("stroke-dashoffset", 0); // Animate stroke-dashoffset to 0
+
+        // Immediately update the label for the treatment line
+        svg.selectAll(".lineTest-label").remove();
+        const xPosTreat = x(dataTreat[dataTreat.length - 1].ser1);
+        const yPosTreat = y(dataTreat[dataTreat.length - 1].ser2);
+
+        svg.append("text")
+          .attr("class", "lineTest-label")
+          .attr("transform", `translate(${xPosTreat},${yPosTreat})`)
+          .attr("dy", function() {
+            return yPosTreat < 10 ? "5em" : "-1.5em";
+          })
+          .attr("dx", function() {
+            return xPosTreat > width - 50 ? "-2.5em" : "1em";
+          })
+          .style("fill", "#ED1652")
+          .text("Affected");
+
+        // Create an update selection: bind to the new data for control line
+        const v = svg.selectAll(".lineControl")
+            .data([dataControl], function(d) { return d.ser1; });
+
+        v.join("path")
+          .attr("class", "lineControl")
+          .attr("d", d3.line()
+            .x(function(d) { return x(d.ser1); })
+            .y(function(d) { return y(d.ser2); }))
+          .attr("fill", "none")
+          .attr("stroke", "#CD92c1")
+          .attr("stroke-width", 2.5)
+          .attr("stroke-dasharray", function() { return this.getTotalLength(); }) // Set stroke-dasharray to the total path length
+          .attr("stroke-dashoffset", function() { return this.getTotalLength(); }) // Set stroke-dashoffset to the total path length
+          .transition()
+          .duration(3000)
+          .attr("stroke-dashoffset", 0); // Animate stroke-dashoffset to 0
+
+        // Immediately update the label for the control line
+        svg.selectAll(".lineControl-label").remove();
+        const xPosControl = x(dataControl[dataControl.length - 1].ser1);
+        const yPosControl = y(dataControl[dataControl.length - 1].ser2);
+
+        svg.append("text")
+          .attr("class", "lineControl-label")
+          .attr("transform", `translate(${xPosControl},${yPosControl})`)
+          .attr("dy", function() {
+            return yPosControl < 10 ? "2.5em" : "-2.5em";
+          })
+          .attr("dx", function() {
+            return xPosControl > width - 50 ? "-3.5em" : "1em";
+          })
+          .style("fill", "#CD92c1")
+          .text("Unaffected");
+    }
+
+    // At the beginning, run the update function on the first datasets:
+    update(data1_treat, data1_control);
+</script>
+
+
+
+<script src="./config.js"></script>
+<script>
+var initLoad = true;
+var layerTypes = {
+    'fill': ['fill-opacity'],
+    'line': ['line-opacity'],
+    'circle': ['circle-opacity', 'circle-stroke-opacity'],
+    'symbol': ['icon-opacity', 'text-opacity'],
+    'raster': ['raster-opacity'],
+    'fill-extrusion': ['fill-extrusion-opacity'],
+    'heatmap': ['heatmap-opacity']
+}
+
+var alignments = {
+    'left': 'lefty',
+    'center': 'centered',
+    'right': 'righty',
+    'full': 'fully'
+}
+
+function getLayerPaintType(layer) {
+    var layerType = map.getLayer(layer).type;
+    return layerTypes[layerType];
+}
+
+function setLayerOpacity(layer) {
+    var paintProps = getLayerPaintType(layer.layer);
+    paintProps.forEach(function(prop) {
+        var options = {};
+        if (layer.duration) {
+            var transitionProp = prop + "-transition";
+            options = { "duration": layer.duration };
+            map.setPaintProperty(layer.layer, transitionProp, options);
+        }
+        map.setPaintProperty(layer.layer, prop, layer.opacity, options);
+    });
+}
+
+var story = document.getElementById('story');
+var features = document.createElement('div');
+features.setAttribute('id', 'features');
+
+var header = document.createElement('div');
+
+if (config.title) {
+    var titleText = document.createElement('h1');
+    titleText.innerText = config.title;
+    header.appendChild(titleText);
+}
+
+if (config.subtitle) {
+    var subtitleText = document.createElement('h2');
+    subtitleText.innerText = config.subtitle;
+    header.appendChild(subtitleText);
+}
+
+if (config.byline) {
+    var bylineText = document.createElement('p');
+    bylineText.innerText = config.byline;
+    header.appendChild(bylineText);
+}
+
+if (header.innerText.length > 0) {
+    header.classList.add(config.theme);
+    header.setAttribute('id', 'header');
+    story.appendChild(header);
+}
+
+config.chapters.forEach((record, idx) => {
+    var container = document.createElement('div');
+    var chapter = document.createElement('div');
+
+    if (record.title) {
+        var title = document.createElement('h3');
+        title.innerText = record.title;
+        chapter.appendChild(title);
+    }
+
+    if (record.image) {
+        var image = new Image();
+        image.src = record.image;
+        chapter.appendChild(image);
+    }
+
+    if (record.description) {
+        var story = document.createElement('p');
+        story.innerHTML = record.description;
+        chapter.appendChild(story);
+    }
+
+    container.setAttribute('id', record.id);
+    container.classList.add('step');
+    if (idx === 0) {
+        container.classList.add('active');
+    }
+
+    chapter.classList.add(config.theme);
+    container.appendChild(chapter);
+    container.classList.add(alignments[record.alignment] || 'centered');
+    if (record.hidden) {
+        container.classList.add('hidden');
+    }
+    features.appendChild(container);
+});
+
+story.appendChild(features);
+
+var footer = document.createElement('div');
+
+if (config.footer) {
+    var footerText = document.createElement('p');
+    footerText.innerHTML = config.footer;
+    footer.appendChild(footerText);
+}
+
+if (footer.innerText.length > 0) {
+    footer.classList.add(config.theme);
+    footer.setAttribute('id', 'footer');
+    story.appendChild(footer);
+}
+
+mapboxgl.accessToken = config.accessToken;
+
+const transformRequest = (url) => {
+    const hasQuery = url.indexOf("?") !== -1;
+    const suffix = hasQuery ? "&pluginName=scrollytellingV2" : "?pluginName=scrollytellingV2";
+    return {
+      url: url + suffix
+    }
+}
+
+var map = new mapboxgl.Map({
+    container: 'map',
+    style: config.style,
+    center: config.chapters[0].location.center,
+    zoom: config.chapters[0].location.zoom,
+    bearing: config.chapters[0].location.bearing,
+    pitch: config.chapters[0].location.pitch,
+    interactive: false,
+    transformRequest: transformRequest,
+    projection: config.projection
+});
+
+// Create a inset map if enabled in config.js
+if (config.inset) {
+ var insetMap = new mapboxgl.Map({
+    container: 'mapInset', // container id
+    style: 'mapbox://styles/mapbox/dark-v10', //hosted style id
+    center: config.chapters[0].location.center,
+    // Hardcode above center value if you want insetMap to be static.
+    zoom: 3, // starting zoom
+    hash: false,
+    interactive: false,
+    attributionControl: false,
+    //Future: Once official mapbox-gl-js has globe view enabled,
+    //insetmap can be a globe with the following parameter.
+    //projection: 'globe'
+  });
+}
+
+if (config.showMarkers) {
+    var marker = new mapboxgl.Marker({ color: config.markerColor });
+    marker.setLngLat(config.chapters[0].location.center).addTo(map);
+}
+
+// instantiate the scrollama
+var scroller = scrollama();
+
+
+
+
+
+map.on("load", function() {
+    if (config.use3dTerrain) {
+        map.addSource('mapbox-dem', {
+            'type': 'raster-dem',
+            'url': 'mapbox://mapbox.mapbox-terrain-dem-v1',
+            'tileSize': 512,
+            'maxzoom': 14
+        });
+        // add the DEM source as a terrain layer with exaggerated height
+        map.setTerrain({ 'source': 'mapbox-dem', 'exaggeration': 1.5 });
+
+        // add a sky layer that will show when the map is highly pitched
+        map.addLayer({
+            'id': 'sky',
+            'type': 'sky',
+            'paint': {
+                'sky-type': 'atmosphere',
+                'sky-atmosphere-sun': [0.0, 0.0],
+                'sky-atmosphere-sun-intensity': 15
+            }
+        });
+    };
+
+    // As the map moves, grab and update bounds in inset map.
+    if (config.inset) {
+    map.on('move', getInsetBounds);
+    }
+    // setup the instance, pass callback functions
+    scroller
+    .setup({
+        step: '.step',
+        offset: 0.5,
+        progress: true
+    })
+    .onStepEnter(async response => {
+        var current_chapter = config.chapters.findIndex(chap => chap.id === response.element.id);
+        var chapter = config.chapters[current_chapter];
+        
+        response.element.classList.add('active');
+        map[chapter.mapAnimation || 'flyTo'](chapter.location);
+
+        // Incase you do not want to have a dynamic inset map,
+        // rather want to keep it a static view but still change the
+        // bbox as main map move: comment out the below if section.
+        if (config.inset) {
+          if (chapter.location.zoom < 5) {
+            insetMap.flyTo({center: chapter.location.center, zoom: 0});
+          }
+          else {
+            insetMap.flyTo({center: chapter.location.center, zoom: 3});
+          }
+        }
+        if (config.showMarkers) {
+            marker.setLngLat(chapter.location.center);
+        }
+        if (chapter.onChapterEnter.length > 0) {
+            chapter.onChapterEnter.forEach(setLayerOpacity);
+        }
+        if (chapter.callback) {
+            window[chapter.callback]();
+        }
+        if (chapter.rotateAnimation) {
+            map.once('moveend', () => {
+                const rotateNumber = map.getBearing();
+                map.rotateTo(rotateNumber + 180, {
+                    duration: 30000, easing: function (t) {
+                        return t;
+                    }
+                });
+            });
+        }
+        if (config.auto) {
+             var next_chapter = (current_chapter + 1) % config.chapters.length;
+             map.once('moveend', () => {
+                 document.querySelectorAll('[data-scrollama-index="' + next_chapter.toString() + '"]')[0].scrollIntoView();
+             });
+        }
+    })
+    .onStepExit(response => {
+        var chapter = config.chapters.find(chap => chap.id === response.element.id);
+        response.element.classList.remove('active');
+        if (chapter.onChapterExit.length > 0) {
+            chapter.onChapterExit.forEach(setLayerOpacity);
+        }
+    });
+
+
+    if (config.auto) {
+        document.querySelectorAll('[data-scrollama-index="0"]')[0].scrollIntoView();
+    }
+});
+
+//Helper functions for insetmap
+function getInsetBounds() {
+            let bounds = map.getBounds();
+
+            let boundsJson = {
+                "type": "FeatureCollection",
+                "features": [{
+                    "type": "Feature",
+                    "properties": {},
+                    "geometry": {
+                        "type": "Polygon",
+                        "coordinates": [
+                            [
+                                [
+                                    bounds._sw.lng,
+                                    bounds._sw.lat
+                                ],
+                                [
+                                    bounds._ne.lng,
+                                    bounds._sw.lat
+                                ],
+                                [
+                                    bounds._ne.lng,
+                                    bounds._ne.lat
+                                ],
+                                [
+                                    bounds._sw.lng,
+                                    bounds._ne.lat
+                                ],
+                                [
+                                    bounds._sw.lng,
+                                    bounds._sw.lat
+                                ]
+                            ]
+                        ]
+                    }
+                }]
+            }
+
+            if (initLoad) {
+                addInsetLayer(boundsJson);
+                initLoad = false;
+            } else {
+                updateInsetLayer(boundsJson);
+            }
+
+        }
+
+function addInsetLayer(bounds) {
+    insetMap.addSource('boundsSource', {
+        'type': 'geojson',
+        'data': bounds
+    });
+
+    insetMap.addLayer({
+        'id': 'boundsLayer',
+        'type': 'fill',
+        'source': 'boundsSource', // reference the data source
+        'layout': {},
+        'paint': {
+            'fill-color': '#fff', // blue color fill
+            'fill-opacity': 0.2
+        }
+    });
+    // // Add a black outline around the polygon.
+    insetMap.addLayer({
+        'id': 'outlineLayer',
+        'type': 'line',
+        'source': 'boundsSource',
+        'layout': {},
+        'paint': {
+            'line-color': '#000',
+            'line-width': 1
+        }
+    });
+}
+
+function updateInsetLayer(bounds) {
+    insetMap.getSource('boundsSource').setData(bounds);
+}
+
+
+
+// setup resize event
+window.addEventListener('resize', scroller.resize);
+
+</script>
+
+<div class="footer">
+    <div class="content">
+        <p> <a href="https://github.com/shivangibishnoi/wildfire-analysis">View project on GitHub </a></p>
+    </div>
+</div>
+
+</body>
+</html>
